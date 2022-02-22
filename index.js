@@ -2,7 +2,8 @@
 const express  = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const cors = require("cors")
+const cors = require("cors");
+const UserRouter = require("./Routers/UserRoute");
 
 
 // connect server 
@@ -13,11 +14,13 @@ app.listen(4000 , ()=> {
     console.log("server is running succefully");
 });
 
+app.get("/",(req , res) => {
+    res.send('chamsou Berkane');
+})
+app.use("/user",UserRouter);
+
 // connect Database
-mongoose.set('useNewUrlParser', true);
-mongoose.set('useFindAndModify', false);
-mongoose.set('useCreateIndex', true);
-mongoose.connect("");
+mongoose.connect("mongodb://localhost:27017/stepServiceServer",{useUnifiedTopology : true , useNewUrlParser : true});
 mongoose.connection.once('open',()=> {
     console.log("dataBase is related sucessfully");
 })
